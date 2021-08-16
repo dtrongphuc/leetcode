@@ -81,3 +81,40 @@ var addTwoNumbers = function (l1, l2) {
 
 	return head.next;
 };
+
+/* 
+3. Longest Substring Without Repeating Characters 
+
+Given a string s, find the length of the longest substring without repeating characters.
+
+0 <= s.length <= 5 * 104
+s consists of English letters, digits, symbols and spaces.
+
+Tách chuỗi thành mảng, lặp qua từng chữ nếu chưa có trong chuỗi đang xét thì nối vào, nếu đã có thì tiến hành cắt chuỗi tại vị trí chữ lặp
+
+vd: abcabcbb
+i = 3
+pos = 0
+c = a
+-> substring = bc 
+*/
+
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var lengthOfLongestSubstring = function (s) {
+	let sub = '',
+		pos;
+
+	return s.split('').reduce((max, c, i) => {
+		pos = sub.indexOf(c);
+		if (pos !== -1) {
+			sub = sub.substring(pos + 1);
+		}
+
+		sub += c;
+
+		return Math.max(max, sub.length);
+	}, 0);
+};
