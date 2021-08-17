@@ -118,3 +118,86 @@ var lengthOfLongestSubstring = function (s) {
 		return Math.max(max, sub.length);
 	}, 0);
 };
+
+//4. Median of Two Sorted Arrays
+
+//5. Longest Palindromic Substring
+/* Given a string s, return the longest palindromic substring in s.
+  1 <= s.length <= 1000
+  s consist of only digits and English letters 
+*/
+
+/**
+ * @param {string} s
+ * @return {string}
+ */
+// 9424ms runtime
+// 45.4mb memory
+var longestPalindrome = function (s) {
+	let subArr,
+		substr,
+		pos,
+		i,
+		arr = s.split(''),
+		longest = arr[0] || '';
+
+	for (i = 0; i < arr.length; i++) {
+		pos = arr.length;
+		do {
+			pos = arr.lastIndexOf(arr[i], pos - 1);
+			if (pos !== -1) {
+				subArr = arr.slice(i, pos + 1);
+				substr = subArr.join('');
+				if (
+					substr.length > longest.length &&
+					substr ===
+						subArr.reduce((reversed, character) => character + reversed, '')
+				) {
+					longest = substr;
+				}
+			}
+		} while (pos > -1 && pos - i > longest.length);
+	}
+
+	return longest;
+};
+
+/**
+ * @param {string} s
+ * @return {string}
+ */
+// 168ms runtime
+// 43.1mb memory
+var longestPalindrome = function (s) {
+	let longest = '',
+		i;
+
+	for (i = 0; i < s.length; i++) {
+		let sub = findPalindromic(s, i);
+		if (longest.length < sub.length) {
+			longest = sub;
+		}
+	}
+
+	return longest;
+};
+
+const findPalindromic = (s, m) => {
+	let l = m,
+		r = m;
+
+	while (l >= 0 && s.charAt(l - 1) === s.charAt(m)) {
+		l -= 1;
+	}
+
+	while (r < s.length && s.charAt(r + 1) === s.charAt(m)) {
+		r += 1;
+	}
+
+	while (l >= 0 && r < s.length && s.charAt(l) === s.charAt(r)) {
+		l -= 1;
+		r += 1;
+	}
+
+	return s.slice(l + 1, r);
+};
