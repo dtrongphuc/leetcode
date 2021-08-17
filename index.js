@@ -182,10 +182,12 @@ var longestPalindrome = function (s) {
 	return longest;
 };
 
+// giả sử m là vị trí cân bằng, l và r là vị trí bắt đầu từ m có chữ đối xứng
 const findPalindromic = (s, m) => {
 	let l = m,
 		r = m;
 
+	// 2 dòng while đầu tiên giải quyết vấn đề các kí tự trước và sau m là chuỗi các kí tự giống nhau
 	while (l >= 0 && s.charAt(l - 1) === s.charAt(m)) {
 		l -= 1;
 	}
@@ -200,4 +202,52 @@ const findPalindromic = (s, m) => {
 	}
 
 	return s.slice(l + 1, r);
+};
+
+//6. ZigZag Conversion
+/* 
+The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)
+
+P   A   H   N
+A P L S I I G
+Y   I   R
+And then read line by line: "PAHNAPLSIIGYIR"
+
+Write the code that will take a string and make this conversion given a number of rows:
+
+string convert(string s, int numRows);
+
+
+1 <= s.length <= 1000
+s consists of English letters (lower-case and upper-case), ',' and '.'.
+1 <= numRows <= 1000
+*/
+
+// cre: Sporkyy
+// 120ms runtiome
+// 43.8mb memory
+
+/**
+ * @param {string} s
+ * @param {number} numRows
+ * @return {string}
+ */
+var convert = function (s, numRows) {
+	// 1. Tạo 1 "khung" zigzag
+	// vd: numRows: 4
+	/* 
+    0
+    1   1
+    2 2
+    3 
+   */
+	const zigzag = Array.from({ length: numRows }, (v, i) => i);
+	zigzag.push(...zigzag.slice(1, -1).reverse());
+
+	// 2. Tạo 1 mảng chứa chuỗi tương ứng với từng dòng
+	const rows = new Array(numRows).fill('');
+	// 3. Map kí tự vào mảng
+	[...s].forEach((c, i) => (rows[zigzag[i % zigzag.length]] += c));
+
+	return rows.join('');
 };
