@@ -251,3 +251,37 @@ var convert = function (s, numRows) {
 
 	return rows.join('');
 };
+
+//7. Reverse Integer
+/* 
+Given a signed 32-bit integer x, return x with its digits reversed. If reversing x causes the value to go outside the signed 32-bit integer range [-231, 231 - 1], then return 0.
+
+Assume the environment does not allow you to store 64-bit integers (signed or unsigned).
+*/
+
+// 92ms runtime
+// 40.5mb memory
+/**
+ * @param {number} x
+ * @return {number}
+ */
+var reverse = function (x) {
+	let num = Math.abs(x),
+		operator = Math.sign(x),
+		digit,
+		reverse = 0,
+		result = 0,
+		limit = Math.pow(2, 31);
+
+	while (num > 0) {
+		digit = num % 10;
+		num = parseInt(num / 10);
+
+		reverse = reverse * 10 + digit;
+	}
+	result = reverse * operator;
+
+	if (result > limit - 1 || result < -limit) return 0;
+
+	return result;
+};
