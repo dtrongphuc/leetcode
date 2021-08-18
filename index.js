@@ -336,3 +336,41 @@ var myAtoi = function (s) {
 
 	return num * operator;
 };
+
+//9. Palindrome Number
+/* Given an integer x, return true if x is palindrome integer.
+
+An integer is a palindrome when it reads the same backward as forward. For example, 121 is palindrome while 123 is not.
+
+-231 <= x <= 231 - 1
+*/
+
+//208 ms, faster than 25.28%
+//48.5 MB, less than 25.65%
+/**
+ * @param {number} x
+ * @return {boolean}
+ */
+var isPalindrome = function (x) {
+	return x.toString() === x.toString().split('').reverse().join('');
+};
+
+// 180 ms, faster than 72.05%
+// 47.9 MB, less than 75.87%
+/**
+ * @param {number} x
+ * @return {boolean}
+ */
+var isPalindrome = function (x) {
+	let reverse = 0,
+		operator = Math.sign(x),
+		num = Math.abs(x);
+	if (operator === -1) return false;
+
+	while (num > 0) {
+		reverse = reverse * 10 + (num % 10);
+		num = parseInt(num / 10);
+	}
+
+	return x === reverse;
+};
