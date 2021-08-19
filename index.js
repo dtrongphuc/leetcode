@@ -374,3 +374,44 @@ var isPalindrome = function (x) {
 
 	return x === reverse;
 };
+
+//10. Regular Expression Matching
+/* 
+Given an input string s and a pattern p, implement regular expression matching with support for '.' and '*' where:
+
+'.' Matches any single character.​​​​
+'*' Matches zero or more of the preceding element.
+The matching should cover the entire input string (not partial).
+
+1 <= s.length <= 20
+1 <= p.length <= 30
+s contains only lowercase English letters.
+p contains only lowercase English letters, '.', and '*'.
+It is guaranteed for each appearance of the character '*', there will be a previous valid character to match.
+
+*/
+
+// refer: retarsis
+/**
+ * @param {string} s
+ * @param {string} p
+ * @return {boolean}
+ */
+var isMatch = function (s, p) {
+	if (!p) {
+		// nếu p đã duyệt hết, kiểm tra s còn kí tự hay không
+		return !s;
+	}
+
+	// kiểm tra ký tự đầu hợp lệ
+	let hasFirstMatch = !!s & (p[0] === s[0] || p[0] === '.');
+
+	if (p[1] === '*') {
+		// nếu chuỗi sau * vẫn hợp lệ với s thì tiếp tục (s, p+2) (nghĩa là p[0]* lúc này được lặp lại 0 lần)
+		// nếu không, kiểm tra có khớp kí tự đầu không và tiến hành lặp với (s+1, p)
+		return isMatch(s, p.slice(2)) || (hasFirstMatch && isMatch(s.slice(1), p));
+	}
+
+	// nếu kí tự đầu tiên khớp nhau thì tiếp tục với s+!, p+1
+	return hasFirstMatch ? isMatch(s.slice(1), p.slice(1)) : false;
+};
