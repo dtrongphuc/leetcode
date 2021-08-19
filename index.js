@@ -619,3 +619,36 @@ var romanToInt = function (s) {
 
 	return num;
 };
+
+//14. Longest Common Prefix
+/*
+Write a function to find the longest common prefix string amongst an array of strings.
+
+If there is no common prefix, return an empty string "".
+
+1 <= strs.length <= 200
+0 <= strs[i].length <= 200
+strs[i] consists of only lower-case English letters.
+*/
+
+//80 ms, faster than 59.74%
+//40.3 MB, less than 46.40%
+/**
+ * @param {string[]} strs
+ * @return {string}
+ */
+var longestCommonPrefix = function (strs) {
+	let prefix = '',
+		min = 0,
+		i;
+	if (strs.length === 0) return '';
+
+	min = Math.min(...strs.map((str) => str.length));
+	for (i = 0; i < min; i++) {
+		let match = strs.find((str) => str[i] !== strs[0][i]);
+		if (typeof match !== 'undefined') return prefix;
+		prefix += strs[0][i];
+	}
+
+	return prefix;
+};
