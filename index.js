@@ -415,3 +415,47 @@ var isMatch = function (s, p) {
 	// nếu kí tự đầu tiên khớp nhau thì tiếp tục với s+!, p+1
 	return hasFirstMatch ? isMatch(s.slice(1), p.slice(1)) : false;
 };
+
+//11. Container With Most Water
+
+/* 
+Given n non-negative integers a1, a2, ..., an , where each represents a point at coordinate (i, ai). n vertical lines are drawn such that the two endpoints of the line i is at (i, ai) and (i, 0). Find two lines, which, together with the x-axis forms a container, such that the container contains the most water.
+
+Notice that you may not slant the container.
+
+n == height.length
+2 <= n <= 105
+0 <= height[i] <= 104
+*/
+
+/* 
+*ý tưởng:
+- để diện tích thùng chứa là lớn nhất thì khoảng cách giữa 2 cột là lớn nhất và độ cao là lớn nhất
+- khởi tạo khoảng cách là lớn nhất, chiều cao thùng chứa = chiều cao thấp hơn trong 2 cột
+- tiếp tục vòng lặp bằng cách thay đổi vị trí cột có chiều cao thấp hơn (tức là sẽ đi tìm cột có chiều cao cao hơn hoặc bằng cột còn lại, bởi vì lúc này khoảng cách giữa 2 cột xét sẽ giảm dần)
+*/
+
+// 84 ms, faster than 83.40%
+//47.8 MB, less than 74.48%
+/**
+ * @param {number[]} height
+ * @return {number}
+ */
+var maxArea = function (height) {
+	let max = 0,
+		l = 0,
+		r = height.length - 1;
+	while (l < r) {
+		let area = (r - l) * Math.min(height[l], height[r]);
+
+		if (area > max) max = area;
+
+		if (height[l] > height[r]) {
+			r--;
+		} else {
+			l++;
+		}
+	}
+
+	return max;
+};
