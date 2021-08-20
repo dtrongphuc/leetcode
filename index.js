@@ -652,3 +652,57 @@ var longestCommonPrefix = function (strs) {
 
 	return prefix;
 };
+
+//15. 3Sum
+/* Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
+
+Notice that the solution set must not contain duplicate triplets.
+
+0 <= nums.length <= 3000
+-105 <= nums[i] <= 105
+ */
+
+// 148ms
+// 49.5mb
+/**
+ * @param {number[]} nums
+ * @return {number[][]}
+ */
+var threeSum = function (nums) {
+	let arr = [],
+		l,
+		r,
+		m,
+		sum;
+	if (!nums || nums.length < 3) return arr;
+
+	//- Sắp xếp mảng tăng dần, dễ dàng kiểm soát được giá trị tiếp theo
+	nums.sort((a, b) => a - b);
+
+	// 3 biến l, m, r tương ứng left, mid, right.
+	// chọn l = 0 là vị trí bắt đầu lặp, tương ứng m = l + 1 và r = length - 1
+	for (l = 0; l < nums.length; l++) {
+		(m = l + 1), (r = nums.length - 1);
+		while (m < r) {
+			sum = nums[l] + nums[m] + nums[r];
+
+			if (sum === 0) {
+				arr.push([nums[l], nums[m], nums[r]]);
+				// để không bị trùng lặp thì ta sẽ bỏ qua các giá trị đã có trong mảng
+				while (nums[m] === nums[m + 1]) m++;
+				while (nums[r] === nums[r - 1]) r--;
+				m++;
+				r--;
+			} else if (sum < 0) {
+				m++;
+			} else {
+				r--;
+			}
+		}
+
+		//bỏ qua trùng lặp
+		while (nums[l] === nums[l + 1]) l++;
+	}
+
+	return arr;
+};
