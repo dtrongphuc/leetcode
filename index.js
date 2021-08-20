@@ -694,8 +694,10 @@ var threeSum = function (nums) {
 				m++;
 				r--;
 			} else if (sum < 0) {
+				// nếu tổng âm, ta cần tăng giá trị lên, tức là tăng cận trái, vì mảng tăng dần
 				m++;
 			} else {
+				// ngược lại ta giảm giá trị bằng cách giảm cận phải
 				r--;
 			}
 		}
@@ -716,3 +718,38 @@ You may assume that each input would have exactly one solution. */
 /* 3 <= nums.length <= 1000
 -1000 <= nums[i] <= 1000
 -104 <= target <= 104 */
+
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number}
+ */
+var threeSumClosest = function (nums, target) {
+	let closest = nums[0] + nums[1] + nums[2],
+		l,
+		r,
+		m,
+		sum;
+	nums.sort((a, b) => a - b);
+
+	for (l = 0; l < nums.length; l++) {
+		(m = l + 1), (r = nums.length - 1);
+		while (m < r) {
+			sum = nums[l] + nums[m] + nums[r];
+
+			if (Math.abs(sum - target) <= Math.abs(closest - target)) {
+				closest = sum;
+			}
+
+			if (sum < target) {
+				m++;
+			} else {
+				r--;
+			}
+		}
+
+		while (nums[l] === nums[l + 1]) l++;
+	}
+
+	return closest;
+};
