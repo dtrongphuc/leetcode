@@ -847,3 +847,45 @@ var fourSum = function (nums, target) {
 
 	return result;
 };
+
+//20. Valid Parentheses
+/* 
+Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+
+An input string is valid if:
+
+  Open brackets must be closed by the same type of brackets.
+  Open brackets must be closed in the correct order.
+ */
+
+/* 1 <= s.length <= 104
+s consists of parentheses only '()[]{}'. */
+
+//76 ms, faster than 59.90%
+//38.7 MB, less than 92.14%
+/**
+ * @param {string} s
+ * @return {boolean}
+ */
+var isValid = function (s) {
+	if (s.length === 1) return false;
+
+	let map = {
+		'(': ')',
+		'{': '}',
+		'[': ']',
+	};
+
+	let stack = [],
+		i;
+	for (i = 0; i < s.length; i++) {
+		if (s[i] === '(' || s[i] === '{' || s[i] === '[') {
+			stack.push(s[i]);
+		} else {
+			let popped = stack.pop();
+			if (map[popped] !== s[i]) return false;
+		}
+	}
+
+	return stack.length > 0 ? false : true;
+};
