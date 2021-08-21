@@ -889,3 +889,61 @@ var isValid = function (s) {
 
 	return stack.length > 0 ? false : true;
 };
+
+//21. Merge Two Sorted Lists
+/* Merge two sorted linked lists and return it as a sorted list. The list should be made by splicing together the nodes of the first two lists. */
+
+/* The number of nodes in both lists is in the range [0, 50].
+-100 <= Node.val <= 100
+Both l1 and l2 are sorted in non-decreasing order. */
+
+//84 ms, faster than 63.18%
+//40.3 MB, less than 92.29%
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} l1
+ * @param {ListNode} l2
+ * @return {ListNode}
+ */
+var mergeTwoLists = function (l1, l2) {
+	if (l1 === null) {
+		return l2;
+	}
+
+	if (l2 === null) {
+		return l1;
+	}
+
+	//chọn list có head nhỏ hơn để lặp, mục đích là để chèn q vào sau p
+	let p = l1.val <= l2.val ? l1 : l2,
+		q = l1.val > l2.val ? l1 : l2,
+		temp;
+
+	// duyệt cho đến hết p hoặc q
+	while (p.next !== null && q !== null) {
+		//nếu node tiếp theo của p có giá trị lớn hơn q thì ta nối p -> q -> p.next
+		if (p.next.val > q.val) {
+			temp = q.next;
+			q.next = p.next;
+			p.next = q;
+
+			q = temp;
+		}
+
+		p = p.next;
+	}
+
+	// nếu q vẫn còn thì có nghĩa là list còn lại có giá trị lớn hơn, nên ta chỉ việc nối vào cuối
+	if (q !== null) {
+		p.next = q;
+	}
+
+  // trả về node head là node bắt đầu nhỏ nhất
+	return l1.val <= l2.val ? l1 : l2;
+};
