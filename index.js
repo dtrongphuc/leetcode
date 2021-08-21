@@ -794,3 +794,56 @@ var letterCombinations = function (digits) {
 
 	return result;
 };
+
+//18. 4Sum
+/* Given an array nums of n integers, return an array of all the unique quadruplets [nums[a], nums[b], nums[c], nums[d]] such that:
+
+0 <= a, b, c, d < n
+a, b, c, and d are distinct.
+nums[a] + nums[b] + nums[c] + nums[d] == target
+You may return the answer in any order. */
+
+/* 1 <= nums.length <= 200
+-109 <= nums[i] <= 109
+-109 <= target <= 109 */
+
+//100 ms, faster than 72.45%
+//41.2 MB, less than 50.85%
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number[][]}
+ */
+var fourSum = function (nums, target) {
+	let result = [];
+	if (!nums || nums.length < 4) return result;
+	nums.sort((a, b) => a - b);
+	let i, j, l, r, sum;
+
+	for (i = 0; i < nums.length - 2; i++) {
+		for (j = i + 1; j < nums.length - 1; j++) {
+			l = j + 1;
+			r = nums.length - 1;
+			while (l < r) {
+				sum = nums[i] + nums[j] + nums[l] + nums[r];
+
+				if (sum === target) {
+					result.push([nums[i], nums[j], nums[l], nums[r]]);
+					while (nums[l] === nums[l + 1]) l++;
+					while (nums[r] === nums[r - 1]) r--;
+					l++;
+					r--;
+				} else if (sum < target) {
+					l++;
+				} else {
+					r--;
+				}
+			}
+
+			while (nums[j] === nums[j + 1]) j++;
+		}
+		while (nums[i] === nums[i + 1]) i++;
+	}
+
+	return result;
+};
