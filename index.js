@@ -944,6 +944,42 @@ var mergeTwoLists = function (l1, l2) {
 		p.next = q;
 	}
 
-  // trả về node head là node bắt đầu nhỏ nhất
+	// trả về node head là node bắt đầu nhỏ nhất
 	return l1.val <= l2.val ? l1 : l2;
+};
+
+//22. Generate Parentheses
+/* Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses. 
+1 <= n <= 8
+*/
+
+// solution with backtracking
+/**
+ * @param {number} n
+ * @return {string[]}
+ */
+var generateParenthesis = function (n) {
+	let output = [];
+
+	const dfs = (l, r, s) => {
+		// vi l chạy trước nên số ngoặc mở phải <= số ngoặc đóng
+		if (l > r) return;
+
+		if (l === 0 && r === 0) {
+			output.push(s);
+			return;
+		}
+
+		if (l > 0) {
+			dfs(l - 1, r, s + '(');
+		}
+
+		if (r > 0) {
+			dfs(l, r - 1, s + ')');
+		}
+	};
+
+	dfs(n, n, '');
+
+	return output;
 };
