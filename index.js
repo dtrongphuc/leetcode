@@ -35,7 +35,7 @@ var twoSum = function (nums, target) {
   You may assume the two numbers do not contain any leading zero, except the number 0 itself.
 */
 
-/* Thay vì cộng như bình thường từ trái sang phải thì với bài toán này ta cộng theo chiều từ phải sang trái */
+/* Thay vì cộng như bình thường từ phải sang trái thì với bài toán này ta cộng theo chiều từ trái sang phải */
 
 /**
  * Definition for singly-linked list.
